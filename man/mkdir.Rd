@@ -2,7 +2,7 @@
 \alias{mkdir}
 \alias{mkdir.default}
 \alias{mkdir.webhdfs}
-\title{mkdir: Create Directory Function}
+\title{mkdir: Create Directory}
 \usage{
 mkdir(fs, path, ...)
 

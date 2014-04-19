@@ -42,7 +42,9 @@ webhdfs <- function(namenode_host, namenode_port, hdfs_username,
   
   #piece request URL to together
   updateURL <- function(url, host, port, token, doas){
-    url <- paste0("http://",host,":",port,"/webhdfs/v1/",url)
+    if(!grepl("^http://", url))
+      url <- paste0("http://",host,":",port,"/webhdfs/v1/",url)
+    
     if(isTRUE(nzchar(token)))
       url <- paste0(url,"&token=",token)
     else if(isTRUE(nzchar(doas)))
