@@ -1,0 +1,8 @@
+S3method(mkdir,default)
+S3method(mkdir,webhdfs)
+export(mkdir)
+export(webhdfs)
+importFrom(RCurl,curlOptions)
+importFrom(RCurl,httpGET)
+importFrom(RCurl,httpPUT)
+importFrom(jsonlite,fromJSON)

@@ -1,0 +1,13 @@
+Package: rwebhdfs
+Title: WebHDFS REST API for R
+Version: 0.1-1
+Authors@R: c(person("Forest", "Fang", email="forest.fang@outlook.com",
+    role=c("aut","cre")))
+Description: WebHDFS supports all HDFS user operations including reading files,
+    writing to files, making directories, changing permissions and renaming.
+Depends:
+    R (>= 3.0.2)
+Imports:
+    RCurl,
+    jsonlite
+License: GPL (>= 3)
