@@ -10,6 +10,7 @@
 #' @return response content
 #' @export
 #' @importFrom RCurl httpGET httpPUT httpPOST basicHeaderGatherer
+#' @importFrom jsonlite fromJSON
 curlWebHDFS <- function(webhdfs, url, requestType = c("GET","POST","PUT"), 
                         doas = NULL, putContent = NULL, .opts = curlOptions(),
                         headerfunction = NULL, ...){
@@ -55,6 +56,9 @@ curlWebHDFS <- function(webhdfs, url, requestType = c("GET","POST","PUT"),
                        httpPOST(url, .opts=opts, headerfunction = hFunc, ...)
                      })
   
-  #TODO: Handle some standard error message(?)
+  if(h$value()["status"] %in% c("400","401","403","404","500"))
+    stop("Request failed: ", h$value()["statusMessage"],
+         try(fromJSON(response, simplifyDataFrame=FALSE)$RemoteException, T))
+  
   response
 }
