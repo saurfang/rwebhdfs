@@ -30,6 +30,12 @@
   \item{permission}{of the file as in octal mask}
 
   \item{buffersize}{used in transferring data}
+
+  \item{...}{additional arguments passed to
+  \code{\link[RCurl]{getURL}}}
+}
+\value{
+\code{TRUE} if successful, \code{FALSE} otherwise
 }
 \description{
 Create and Write to a File on HDFS

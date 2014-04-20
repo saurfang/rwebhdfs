@@ -16,7 +16,7 @@ writeFile(fs, targetPath, ...)
   \item{...}{other arguments}
 }
 \value{
-\code{TRUE} if seccessful, \code{FALSE} otherwise
+\code{TRUE} if successful, \code{FALSE} otherwise
 }
 \description{
 Write to a File on a FileSystem

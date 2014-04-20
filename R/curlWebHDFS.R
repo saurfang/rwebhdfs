@@ -1,0 +1,60 @@
+#' Dispatch a WebHDFS Curl request
+#' @param webhdfs A \code{\link{webhdfs}} object
+#' @param url The curl to request
+#' @param requestType a character vector chosen from "GET", "POST", "PUT"
+#' @param doas proxy username
+#' @param putContent content to send in a PUT request
+#' @param .opts a \code{\link[RCurl]{curlOptions}} object
+#' @param headerfunction a function that processes the header information
+#' @param ... additional arguments passed to \code{\link[RCurl]{getURL}}
+#' @return response content
+#' @export
+#' @importFrom RCurl httpGET httpPUT httpPOST basicHeaderGatherer
+curlWebHDFS <- function(webhdfs, url, requestType = c("GET","POST","PUT"), 
+                        doas = NULL, putContent = NULL, .opts = curlOptions(),
+                        headerfunction = NULL, ...){
+  if(!inherits(webhdfs, "webhdfs"))
+    stop("Need a valid webhdfs object: ", webhdfs)
+  
+  #piece together request URL
+  if(!grepl("^http://", url))
+    url <- paste0("http://",webhdfs$host,":",webhdfs$port,"/webhdfs/v1/",url)
+  if(webhdfs$security && isTRUE(nzchar(webhdfs$token)))
+    url <- paste0(url,"&token=",webhdfs$token)
+  if(isTRUE(nzchar(doas)))
+    url <- paste0("url","&doas=",doas)
+  
+  opts <- if(inherits(.opts, "CURLOptions")) .opts else curlOptions()
+  #Enable Kerberos SPNEGO
+  if(webhdfs$security && is.null(webhdfs$token))
+      opts[["username"]] <- ":"
+  
+  #We want to capture some header information for error analysis
+  h = basicHeaderGatherer()
+  hFunc = function(str){
+    h$update(str)
+    #User might also have interests in this information
+    if(is.function(headerfunction))
+      headerfunction(str)
+  }
+  
+  requestType <- match.arg(requestType)
+  response <- switch(requestType,
+                     GET = {
+                       httpGET(url, .opts=opts, headerfunction = hFunc, ...)
+                     },
+                     PUT = {
+                       if(is.null(putContent))
+                         httpPUT(url, .opts=opts, ...)
+                       else
+                         httpPUT(url, putContent, .opts=opts, 
+                                 headerfunction = hFunc, ...)
+                     },
+                     POST = {
+                       ##TODO: Double check this is correct
+                       httpPOST(url, .opts=opts, headerfunction = hFunc, ...)
+                     })
+  
+  #TODO: Handle some standard error message(?)
+  response
+}

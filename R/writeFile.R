@@ -33,9 +33,11 @@ writeFile.default <- function(fs, targetPath, ...){
 #' @param replication factor for the file
 #' @param permission of the file as in octal mask
 #' @param buffersize used in transferring data
+#' @param ... additional arguments passed to \code{\link[RCurl]{getURL}}
 #' @return \code{TRUE} if successful, \code{FALSE} otherwise
 #' @references \href{http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/WebHDFS.html#Create_and_Write_to_a_File}{WebHDFS}
 #' \href{http://hadoop.apache.org/docs/stable/api/org/apache/hadoop/fs/FileSystem.html}{HDFS FileSystem}
+#' @importFrom RCurl basicHeaderGatherer
 writeFile.webhdfs <- function(fs, targetPath, srcPath, sizeWarn=1e8,
                               append=FALSE, overwrite=FALSE,
                               blocksize=NULL, replication=NULL,
@@ -63,11 +65,11 @@ writeFile.webhdfs <- function(fs, targetPath, srcPath, sizeWarn=1e8,
       warning("invalid permission code")
   }
   
-  if(is.numeric(beffersize) && buffersize > 0)
+  if(is.numeric(buffersize) && buffersize > 0)
     url <- paste0(url, "&buffersize=",as.integer(buffersize))
   
   h <- basicHeaderGatherer()
-  fs$put(url, followlocation = FALSE, headerfunction = h$update)
+  curlWebHDFS(fs, url, "PUT", followlocation = FALSE, headerfunction = h$update)
   location <- h$value()["location"]
   h$reset()
   
@@ -81,7 +83,7 @@ writeFile.webhdfs <- function(fs, targetPath, srcPath, sizeWarn=1e8,
     readline("Press [Enter] to continue...")  
   }
   
-  fs$put(location, readLines(srcPath), headerfunction = h$update)
+  curlWebHDFS(fs, location, "PUT", putContent=readLines(srcPath), headerfunction = h$update)
   ##TODO: better error handling
   if(h$value()["status"]!="201" || h$value()["statusMessage"]!="Created"){
     warning("Failed to write file: " + h$value()["statusMessage"])

@@ -40,49 +40,10 @@ webhdfs <- function(namenode_host, namenode_port, hdfs_username,
   if(!is.null(token) && !isTRUE(nzchar(token)))
     warning("Delegation token is empty")
   
-  #piece request URL to together
-  updateURL <- function(url, host, port, token, doas){
-    if(!grepl("^http://", url))
-      url <- paste0("http://",host,":",port,"/webhdfs/v1/",url)
-    
-    if(isTRUE(nzchar(token)))
-      url <- paste0(url,"&token=",token)
-    else if(isTRUE(nzchar(doas)))
-      url <- paste0("url","&doas=",doas)
-    url
-  }
-  
   structure(list(host=namenode_host, 
                  port=namenode_port, 
                  user=hdfs_username,
                  security=securityON,
-                 token=token,
-                 put=function(url, content=NULL, doas=NULL, ...){
-                   opts <- list()
-                   if(securityON){
-                     if(is.null(token))
-                       opts <- curlOptions(username=":")
-                   }else{
-                     token <- NULL
-                   }
-                   url <- updateURL(url, namenode_host, namenode_port, token, doas)
-                  
-                   if(is.null(content))
-                     httpPUT(url, .opts=opts, ...)
-                   else
-                     httpPUT(url, content, .opts=opts, ...)
-                 },
-                 get=function(url, doas = NULL, ...){
-                   opts <- list()
-                   if(securityON){
-                     if(is.null(token))
-                       opts <- curlOptions(username=":")
-                   }else{
-                     token <- NULL
-                   }
-                   url <- updateURL(url, namenode_host, namenode_port, token, doas)
-                   
-                   httpGET(url, .opts=opts, ...)
-                 }),
+                 token=token),
             class = "webhdfs")
 }
