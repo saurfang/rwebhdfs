@@ -4,7 +4,7 @@
 #' @param requestType a character vector chosen from "GET", "POST", "PUT"
 #' @param doas proxy username
 #' @param putContent content to send in a PUT request
-#' @param .opts a \code{\link[RCurl]{curlOptions}} object
+#' @param .opts a \code{\link{list}} of \code{\link[RCurl]{curlOptions}}
 #' @param headerfunction a function that processes the header information
 #' @param ... additional arguments passed to \code{\link[RCurl]{getURL}}
 #' @return response content
@@ -19,42 +19,46 @@ curlWebHDFS <- function(webhdfs, url, requestType = c("GET","POST","PUT"),
   
   #piece together request URL
   if(!grepl("^http://", url))
-    url <- paste0("http://",webhdfs$host,":",webhdfs$port,"/webhdfs/v1/",url)
+    url <- paste0("http://",webhdfs$host,":",webhdfs$port,"/webhdfs/v1",url)
   if(webhdfs$security && isTRUE(nzchar(webhdfs$token)))
     url <- paste0(url,"&token=",webhdfs$token)
   if(isTRUE(nzchar(doas)))
-    url <- paste0("url","&doas=",doas)
+    url <- paste0(url,"&doas=",doas)
   
-  opts <- if(inherits(.opts, "CURLOptions")) .opts else curlOptions()
+  opts <- if(inherits(.opts, "curlOptions")) .opts else curlOptions()
   #Enable Kerberos SPNEGO
   if(webhdfs$security && is.null(webhdfs$token))
       opts[["username"]] <- ":"
   
   #We want to capture some header information for error analysis
-  h = basicHeaderGatherer()
-  hFunc = function(str){
-    h$update(str)
+  h <- basicHeaderGatherer()
+  hFunc <- function(str){
     #User might also have interests in this information
     if(is.function(headerfunction))
       headerfunction(str)
+    h$update(str)
   }
+  opts[["headerfunction"]] <- hFunc
   
-  requestType <- match.arg(requestType)
-  response <- switch(requestType,
-                     GET = {
-                       httpGET(url, .opts=opts, headerfunction = hFunc, ...)
-                     },
-                     PUT = {
-                       if(is.null(putContent))
-                         httpPUT(url, .opts=opts, ...)
-                       else
-                         httpPUT(url, putContent, .opts=opts, 
-                                 headerfunction = hFunc, ...)
-                     },
-                     POST = {
-                       ##TODO: Double check this is correct
-                       httpPOST(url, .opts=opts, headerfunction = hFunc, ...)
-                     })
+  #requestType <- match.arg(requestType)
+  opts[["customrequest"]] <- match.arg(requestType)
+#   response <- switch(requestType,
+#                      GET = {
+#                        httpGET(url, .opts=opts, ...)
+#                      },
+#                      PUT = {
+#                        opts[["customrequest"]] <- "PUT"
+#                        if(is.null(putContent))
+#                          httpPUT(url, .opts=opts, ...)
+#                        else
+#                          httpPUT(url, putContent, .opts=opts, ...)
+#                      },
+#                      POST = {
+#                        opts[["customrequest"]] <- "POST"
+#                        ##TODO: Double check this is correct
+#                        httpPOST(url, .opts=opts, ...)
+#                      })
+  response <- getURL(url, .opts=opts)
   
   if(h$value()["status"] %in% c("400","401","403","404","500"))
     stop("Request failed: ", h$value()["statusMessage"],

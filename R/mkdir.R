@@ -28,6 +28,6 @@ mkdir.webhdfs <- function(fs, path, ...){
   if(!nzchar(path) || substring(path, 1, 1)!="/")
     stop("Path must be non-empty and start with slash '/'")
   
-  response <- curlWebHDFS(fs, paste0(path,"?op=MKDIRS"))
+  response <- curlWebHDFS(fs, paste0(path,"?op=MKDIRS"), "PUT", ...)
   return(fromJSON(response)$boolean)
 }
