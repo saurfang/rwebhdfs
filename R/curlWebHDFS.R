@@ -2,7 +2,8 @@
 #' @param webhdfs A \code{\link{webhdfs}} object
 #' @param url The curl to request
 #' @param requestType a character vector chosen from "GET", "POST", "PUT"
-#' @param doas proxy username
+#' @param user the user.name to authenticate through security
+#' @param doas proxy username that will be impersonated by the query user above
 #' @param putContent content to send in a PUT request
 #' @param .opts a \code{\link{list}} of \code{\link[RCurl]{curlOptions}}
 #' @param headerfunction a function that processes the header information
@@ -12,8 +13,8 @@
 #' @importFrom RCurl httpGET httpPUT httpPOST basicHeaderGatherer
 #' @importFrom jsonlite fromJSON
 curlWebHDFS <- function(webhdfs, url, requestType = c("GET","POST","PUT"), 
-                        doas = NULL, putContent = NULL, .opts = curlOptions(),
-                        headerfunction = NULL, ...){
+                        user = NULL, doas = NULL, putContent = NULL, 
+                        .opts = curlOptions(), headerfunction = NULL, ...){
   if(!inherits(webhdfs, "webhdfs"))
     stop("Need a valid webhdfs object: ", webhdfs)
   
@@ -22,11 +23,13 @@ curlWebHDFS <- function(webhdfs, url, requestType = c("GET","POST","PUT"),
     url <- paste0("http://",webhdfs$host,":",webhdfs$port,"/webhdfs/v1",url)
   if(webhdfs$security && isTRUE(nzchar(webhdfs$token)))
     url <- paste0(url,"&token=",webhdfs$token)
+  if(isTRUE(nzchar(user)))
+    url <- paste0(url,"&user.name=",user)
   if(isTRUE(nzchar(doas)))
     url <- paste0(url,"&doas=",doas)
   
   opts <- if(inherits(.opts, "curlOptions")) .opts else curlOptions()
-  opts <- curlOptions(..., opts)
+  opts <- curlOptions(..., .opts=opts)
   #Enable Kerberos SPNEGO
   if(webhdfs$security && is.null(webhdfs$token))
       opts[["username"]] <- ":"
@@ -41,26 +44,24 @@ curlWebHDFS <- function(webhdfs, url, requestType = c("GET","POST","PUT"),
   }
   opts[["headerfunction"]] <- hFunc
   
-  requestType <- opts[["customrequest"]] <- match.arg(requestType)
-  response <- switch(requestType,
-                     GET = {
-                       httpGET(url, .opts=opts)
-                     },
-                     PUT = {
-                       if(is.null(putContent))
-                         httpPUT(url, .opts=opts)
-                       else
-                         httpPUT(url, putContent, .opts=opts)
-                     },
-                     POST = {
-                       ##TODO: Double check this is correct
-                       httpPOST(url, .opts=opts)
-                     })
-  #response <- getURL(url, .opts=opts)
+  opts[["customrequest"]] <- requestType <- match.arg(requestType)
+  if(requestType == "PUT" && !is.null(putContent)){
+    val = if (is.character(putContent)) 
+      charToRaw(paste(putContent, collapse = "\n"))
+    else if (is.raw(putContent)) 
+      putContent
+    else 
+      stop("not certain how to convert content to the target type for a PUT request")
+    opts <- curlOptions(infilesize = length(val), readfunction = val, 
+                        upload = TRUE, .opts=opts)
+  }
   
-  if(h$value()["status"] %in% c("400","401","403","404","500"))
+  response <- getURL(url, .opts=opts)
+  
+  if(as.integer(h$value()["status"]) >= 400)
     stop("Request failed: ", h$value()["statusMessage"],
-         try(fromJSON(response, simplifyDataFrame=FALSE)$RemoteException, T))
+         tryCatch({fromJSON(response, simplifyDataFrame=FALSE)$RemoteException},
+                  error = function(x){response}),"\n",url)
   
   response
 }
