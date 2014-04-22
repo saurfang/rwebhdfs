@@ -26,6 +26,7 @@ curlWebHDFS <- function(webhdfs, url, requestType = c("GET","POST","PUT"),
     url <- paste0(url,"&doas=",doas)
   
   opts <- if(inherits(.opts, "curlOptions")) .opts else curlOptions()
+  opts <- curlOptions(..., opts)
   #Enable Kerberos SPNEGO
   if(webhdfs$security && is.null(webhdfs$token))
       opts[["username"]] <- ":"
@@ -40,25 +41,22 @@ curlWebHDFS <- function(webhdfs, url, requestType = c("GET","POST","PUT"),
   }
   opts[["headerfunction"]] <- hFunc
   
-  #requestType <- match.arg(requestType)
-  opts[["customrequest"]] <- match.arg(requestType)
-#   response <- switch(requestType,
-#                      GET = {
-#                        httpGET(url, .opts=opts, ...)
-#                      },
-#                      PUT = {
-#                        opts[["customrequest"]] <- "PUT"
-#                        if(is.null(putContent))
-#                          httpPUT(url, .opts=opts, ...)
-#                        else
-#                          httpPUT(url, putContent, .opts=opts, ...)
-#                      },
-#                      POST = {
-#                        opts[["customrequest"]] <- "POST"
-#                        ##TODO: Double check this is correct
-#                        httpPOST(url, .opts=opts, ...)
-#                      })
-  response <- getURL(url, .opts=opts)
+  requestType <- opts[["customrequest"]] <- match.arg(requestType)
+  response <- switch(requestType,
+                     GET = {
+                       httpGET(url, .opts=opts)
+                     },
+                     PUT = {
+                       if(is.null(putContent))
+                         httpPUT(url, .opts=opts)
+                       else
+                         httpPUT(url, putContent, .opts=opts)
+                     },
+                     POST = {
+                       ##TODO: Double check this is correct
+                       httpPOST(url, .opts=opts)
+                     })
+  #response <- getURL(url, .opts=opts)
   
   if(h$value()["status"] %in% c("400","401","403","404","500"))
     stop("Request failed: ", h$value()["statusMessage"],
