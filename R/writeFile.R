@@ -69,7 +69,7 @@ writeFile.webhdfs <- function(fs, targetPath, srcPath, sizeWarn=1e8,
     url <- paste0(url, "&buffersize=",as.integer(buffersize))
   
   h <- basicHeaderGatherer()
-  curlWebHDFS(fs, url, "PUT", followlocation = FALSE, headerfunction = h$update, ...)
+  curlWebHDFS(fs, url, if(append) "POST" else "PUT", followlocation = FALSE, headerfunction = h$update, ...)
   if(h$value()["status"]!="307")
     warning("Unrecognized header content: ", h$value(), "[expect 307]")
   location <- h$value()["Location"]
@@ -85,10 +85,18 @@ writeFile.webhdfs <- function(fs, targetPath, srcPath, sizeWarn=1e8,
     readline("Press [Enter] to continue...")  
   }
   
-  response <- curlWebHDFS(fs, location, "PUT", putContent=readLines(srcPath), headerfunction = h$update, ...)
-  if(h$value()["status"]!="201" || h$value()["statusMessage"]!="Created"){
-    warning("Failed to write file: ", h$value(), "\n", response)
-    return(FALSE)
+  response <- curlWebHDFS(fs, location, if(append) "POST" else "PUT", putContent=readLines(srcPath), headerfunction = h$update, ...)
+  if(append){
+    if(h$value()["status"]!="200" || h$value()["statusMessage"]!="OK"){
+      warning("Failed to append file: ", h$value(), "\n", response)
+      return(FALSE)
+    }
+  }else{ 
+    if(h$value()["status"]!="201" || h$value()["statusMessage"]!="Created"){
+      warning("Failed to write file: ", h$value(), "\n", response)
+      return(FALSE)
+    }
   }
+  
   return(TRUE)
 }

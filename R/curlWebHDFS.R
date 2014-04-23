@@ -45,7 +45,7 @@ curlWebHDFS <- function(webhdfs, url, requestType = c("GET","POST","PUT"),
   opts[["headerfunction"]] <- hFunc
   
   opts[["customrequest"]] <- requestType <- match.arg(requestType)
-  if(requestType == "PUT" && !is.null(putContent)){
+  if(requestType %in% c("PUT", "POST") && !is.null(putContent)){
     val = if (is.character(putContent)) 
       charToRaw(paste(putContent, collapse = "\n"))
     else if (is.raw(putContent)) 
