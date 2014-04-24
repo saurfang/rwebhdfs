@@ -1,11 +1,11 @@
-\name{writeFile}
-\alias{writeFile}
-\alias{writeFile.default}
-\title{writeFile: Write to a File on a FileSystem}
+\name{write_file}
+\alias{write_file}
+\alias{write_file.default}
+\title{write_file: Write to a File on a FileSystem}
 \usage{
-writeFile(fs, targetPath, ...)
+write_file(fs, targetPath, ...)
 
-\method{writeFile}{default}(fs, targetPath, ...)
+\method{write_file}{default}(fs, targetPath, ...)
 }
 \arguments{
   \item{fs}{FileSystem object}

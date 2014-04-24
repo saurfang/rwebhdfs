@@ -1,8 +1,8 @@
-\name{writeFile.webhdfs}
-\alias{writeFile.webhdfs}
+\name{write_file.webhdfs}
+\alias{write_file.webhdfs}
 \title{Create and Write to a File on HDFS}
 \usage{
-\method{writeFile}{webhdfs}(fs, targetPath, srcPath, sizeWarn = 1e+08,
+\method{write_file}{webhdfs}(fs, targetPath, srcPath, sizeWarn = 1e+08,
   append = FALSE, overwrite = FALSE, blocksize = NULL,
   replication = NULL, permission = 755, buffersize = NULL, ...)
 }

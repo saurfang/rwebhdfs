@@ -1,28 +1,28 @@
 #' Write to a File on a FileSystem
 #' 
 #' @return \code{TRUE} if successful, \code{FALSE} otherwise
-#' @title writeFile: Write to a File on a FileSystem
+#' @title write_file: Write to a File on a FileSystem
 #' @param fs FileSystem object
 #' @param targetPath a character vector that contains the path of file to write
 #' @param ... other arguments
-#' @rdname writeFile
-#' @export writeFile
-writeFile <- function(fs, targetPath, ...){
-  UseMethod("writeFile")
+#' @rdname write_file
+#' @export write_file
+write_file <- function(fs, targetPath, ...){
+  UseMethod("write_file")
 }
 
-#' @rdname writeFile
-#' @method writeFile default
-#' @S3method writeFile default
-writeFile.default <- function(fs, targetPath, ...){
+#' @rdname write_file
+#' @method write_file default
+#' @S3method write_file default
+write_file.default <- function(fs, targetPath, ...){
   warning("Unrecognized filesystem, invoking write...")
   write(..., file=targetPath)
 }
  
 #' @title Create and Write to a File on HDFS
-#' @rdname writeFile.hdfs
-#' @method writeFile webhdfs
-#' @S3method writeFile webhdfs
+#' @rdname write_file.hdfs
+#' @method write_file webhdfs
+#' @S3method write_file webhdfs
 #' @param fs HDFS FileSystem object
 #' @param targetPath a character vector that contains the path of file to write
 #' @param srcPath path of the file whose content will be written
@@ -38,7 +38,7 @@ writeFile.default <- function(fs, targetPath, ...){
 #' @references \href{http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/WebHDFS.html#Create_and_Write_to_a_File}{WebHDFS}
 #' \href{http://hadoop.apache.org/docs/stable/api/org/apache/hadoop/fs/FileSystem.html}{HDFS FileSystem}
 #' @importFrom RCurl basicHeaderGatherer
-writeFile.webhdfs <- function(fs, targetPath, srcPath, sizeWarn=1e8,
+write_file.webhdfs <- function(fs, targetPath, srcPath, sizeWarn=1e8,
                               append=FALSE, overwrite=FALSE,
                               blocksize=NULL, replication=NULL,
                               permission=755, buffersize=NULL, ...){

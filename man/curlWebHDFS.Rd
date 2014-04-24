@@ -3,7 +3,7 @@
 \title{Dispatch a WebHDFS Curl request}
 \usage{
 curlWebHDFS(webhdfs, url, requestType = c("GET", "POST", "PUT"),
-  doas = NULL, putContent = NULL, .opts = curlOptions(),
+  user = NULL, doas = NULL, putContent = NULL, .opts = curlOptions(),
   headerfunction = NULL, ...)
 }
 \arguments{
@@ -14,11 +14,16 @@ curlWebHDFS(webhdfs, url, requestType = c("GET", "POST", "PUT"),
   \item{requestType}{a character vector chosen from "GET",
   "POST", "PUT"}
 
-  \item{doas}{proxy username}
+  \item{user}{the user.name to authenticate through
+  security}
+
+  \item{doas}{proxy username that will be impersonated by
+  the query user above}
 
   \item{putContent}{content to send in a PUT request}
 
-  \item{.opts}{a \code{\link[RCurl]{curlOptions}} object}
+  \item{.opts}{a \code{\link{list}} of
+  \code{\link[RCurl]{curlOptions}}}
 
   \item{headerfunction}{a function that processes the
   header information}
