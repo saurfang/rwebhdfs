@@ -16,5 +16,6 @@ Collate:
     'get_webhdfs_home.R'
     'concat_file.R'
     'mkdir.R'
+    'read_file.R'
     'webhdfs.R'
     'write_file.R'

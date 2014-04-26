@@ -43,7 +43,7 @@ write_file.webhdfs <- function(fs, targetPath, srcPath, sizeWarn=1e8,
                               append=FALSE, overwrite=FALSE,
                               blocksize=NULL, replication=NULL,
                               permission=755, buffersize=NULL, ...){
-  #Check path is absolute
+  #Check path is non empty
   if(!nzchar(targetPath))
     stop("Target Path must be non-empty")
   #Check source path exists
