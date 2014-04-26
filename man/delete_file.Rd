@@ -1,0 +1,30 @@
+\name{delete_file}
+\alias{delete_file}
+\alias{delete_file.default}
+\alias{delete_file.webhdfs}
+\title{delete_file: Rename a File/Directory on a FileSystem}
+\usage{
+delete_file(fs, path, recursive, ...)
+
+\method{delete_file}{default}(fs, path, recursive = FALSE, ...)
+
+\method{delete_file}{webhdfs}(fs, path, recursive = FALSE, ...)
+}
+\arguments{
+  \item{fs}{FileSystem object}
+
+  \item{path}{a character vector that contains the path
+  renaming from}
+
+  \item{recursive}{whether to delete contents of directory
+  recursively}
+
+  \item{...}{other arguments}
+}
+\value{
+\code{TRUE} if successful, \code{FALSE} otherwise
+}
+\description{
+Rename a File/Directory on a FileSystem
+}
+

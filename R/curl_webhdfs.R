@@ -11,7 +11,7 @@
 #' @export
 #' @importFrom RCurl getURL basicHeaderGatherer
 #' @importFrom jsonlite fromJSON
-curl_webhdfs <- function(webhdfs, url, requestType = c("GET","POST","PUT"), 
+curl_webhdfs <- function(webhdfs, url, requestType = c("GET","POST","PUT","DELETE"), 
                         doas = NULL, putContent = NULL, .opts = curlOptions(), 
                         headerfunction = NULL, ...){
   if(!inherits(webhdfs, "webhdfs"))

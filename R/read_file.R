@@ -51,7 +51,7 @@ read_file.webhdfs <- function(fs, path, offset=NULL, length=NULL, buffersize=NUL
   response <- curl_webhdfs(fs, url, "GET", followlocation = TRUE, headerfunction = h$update, ...)
   
   if(h$value()["status"]!="200" || h$value()["statusMessage"]!="OK"){
-    warning("Failed to append file: ", h$value(), "\n", response)
+    warning("Failed to read file: ", h$value(), "\n", response)
     return(NULL)
   }
   

@@ -4,7 +4,7 @@
 \alias{concat_file.webhdfs}
 \title{concat_file: Concat File(s) on a FileSystem}
 \usage{
-concat_file(fs, targetPath, ...)
+concat_file(fs, targetPath, sourcePath, ...)
 
 \method{concat_file}{default}(fs, targetPath, sourcePath, ...)
 

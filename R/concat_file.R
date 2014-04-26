@@ -8,7 +8,7 @@
 #' @param ... other arguments
 #' @rdname concat_file
 #' @export concat_file
-concat_file <- function(fs, targetPath, ...){
+concat_file <- function(fs, targetPath, sourcePath, ...){
   UseMethod("concat_file")
 }
 
@@ -29,7 +29,7 @@ concat_file.default <- function(fs, targetPath, sourcePath, ...){
 #' @importFrom RCurl basicHeaderGatherer
 #' @include curl_webhdfs.R get_webhdfs_home.R
 concat_file.webhdfs <- function(fs, targetPath, sourcePath, ...){
-  #Check path is absolute
+  #Check path is non empty
   if(!nzchar(targetPath))
     stop("Target Path must be non-empty")
   

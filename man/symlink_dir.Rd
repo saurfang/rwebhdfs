@@ -1,0 +1,32 @@
+\name{symlink_dir}
+\alias{symlink_dir}
+\alias{symlink_dir.default}
+\alias{symlink_dir.webhdfs}
+\title{symlink_dir: Create a Symbolic Link on a FileSystem}
+\usage{
+symlink_dir(fs, fromPath, toPath, createParent, ...)
+
+\method{symlink_dir}{default}(fs, fromPath, toPath, createParent = TRUE, ...)
+
+\method{symlink_dir}{webhdfs}(fs, fromPath, toPath, createParent = TRUE, ...)
+}
+\arguments{
+  \item{fs}{FileSystem object}
+
+  \item{fromPath}{a character vector that contains the path
+  linking from}
+
+  \item{toPath}{a character vector that contains the path
+  linking to}
+
+  \item{createParent}{creates parent folder if \code{TRUE}}
+
+  \item{...}{other arguments}
+}
+\value{
+\code{TRUE} if successful, \code{FALSE} otherwise
+}
+\description{
+Create a Symbolic Link on a FileSystem
+}
+
