@@ -23,11 +23,12 @@ mkdir.default <- function(fs, path, ...){
 #' @method mkdir webhdfs
 #' @S3method mkdir webhdfs
 #' @importFrom jsonlite fromJSON
+#' @include curl_webhdfs.R
 mkdir.webhdfs <- function(fs, path, ...){
-  #Check path is absolute
-  if(!nzchar(path) || substring(path, 1, 1)!="/")
-    stop("Path must be non-empty and start with slash '/'")
+  #Check path is non-empty
+  if(!nzchar(path))
+    stop("Path must be non-empty!")
   
-  response <- curlWebHDFS(fs, paste0(path,"?op=MKDIRS"), "PUT", ...)
+  response <- curl_webhdfs(fs, paste0(path,"?op=MKDIRS"), "PUT", ...)
   return(fromJSON(response)$boolean)
 }

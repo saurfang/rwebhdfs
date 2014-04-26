@@ -2,7 +2,6 @@
 #' @param webhdfs A \code{\link{webhdfs}} object
 #' @param url The curl to request
 #' @param requestType a character vector chosen from "GET", "POST", "PUT"
-#' @param user the user.name to authenticate through security
 #' @param doas proxy username that will be impersonated by the query user above
 #' @param putContent content to send in a PUT request
 #' @param .opts a \code{\link{list}} of \code{\link[RCurl]{curlOptions}}
@@ -10,21 +9,24 @@
 #' @param ... additional arguments passed to \code{\link[RCurl]{getURL}}
 #' @return response content
 #' @export
-#' @importFrom RCurl httpGET httpPUT httpPOST basicHeaderGatherer
+#' @importFrom RCurl getURL basicHeaderGatherer
 #' @importFrom jsonlite fromJSON
-curlWebHDFS <- function(webhdfs, url, requestType = c("GET","POST","PUT"), 
-                        user = NULL, doas = NULL, putContent = NULL, 
-                        .opts = curlOptions(), headerfunction = NULL, ...){
+curl_webhdfs <- function(webhdfs, url, requestType = c("GET","POST","PUT"), 
+                        doas = NULL, putContent = NULL, .opts = curlOptions(), 
+                        headerfunction = NULL, ...){
   if(!inherits(webhdfs, "webhdfs"))
     stop("Need a valid webhdfs object: ", webhdfs)
   
   #piece together request URL
-  if(!grepl("^http://", url))
+  if(!grepl("^http://", url)){
+    if(substring(url, 1, 1) != "/")
+      url <- paste0(get_webhdfs_home(webhdfs, doas), "/", url)
     url <- paste0("http://",webhdfs$host,":",webhdfs$port,"/webhdfs/v1",url)
+  }
   if(webhdfs$security && isTRUE(nzchar(webhdfs$token)))
     url <- paste0(url,"&token=",webhdfs$token)
-  if(isTRUE(nzchar(user)))
-    url <- paste0(url,"&user.name=",user)
+  if(isTRUE(nzchar(webhdfs$user)))
+    url <- paste0(url,"&user.name=", webhdfs$user)
   if(isTRUE(nzchar(doas)))
     url <- paste0(url,"&doas=",doas)
   

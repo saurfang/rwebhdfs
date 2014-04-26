@@ -40,8 +40,8 @@ webhdfs <- function(namenode_host, namenode_port, hdfs_username,
   if(!is.null(token) && !isTRUE(nzchar(token)))
     warning("Delegation token is empty")
   
-  structure(list(host=namenode_host, 
-                 port=namenode_port, 
+  structure(list(host=namenode_host,
+                 port=namenode_port,
                  user=hdfs_username,
                  security=securityON,
                  token=token),

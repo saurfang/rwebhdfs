@@ -20,7 +20,7 @@ write_file.default <- function(fs, targetPath, ...){
 }
  
 #' @title Create and Write to a File on HDFS
-#' @rdname write_file.hdfs
+#' @rdname write_file.webhdfs
 #' @method write_file webhdfs
 #' @S3method write_file webhdfs
 #' @param fs HDFS FileSystem object
@@ -35,18 +35,19 @@ write_file.default <- function(fs, targetPath, ...){
 #' @param buffersize used in transferring data
 #' @param ... additional arguments passed to \code{\link[RCurl]{getURL}}
 #' @return \code{TRUE} if successful, \code{FALSE} otherwise
-#' @references \href{http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/WebHDFS.html#Create_and_Write_to_a_File}{WebHDFS}
-#' \href{http://hadoop.apache.org/docs/stable/api/org/apache/hadoop/fs/FileSystem.html}{HDFS FileSystem}
+#' @references \href{http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/WebHDFS.html}{WebHDFS}
+#' \href{http://hadoop.apache.org/docs/stable/api/org/apache/hadoop/fs/FileSystem.html}{HDFSFileSystem}
 #' @importFrom RCurl basicHeaderGatherer
+#' @include curl_webhdfs.R
 write_file.webhdfs <- function(fs, targetPath, srcPath, sizeWarn=1e8,
                               append=FALSE, overwrite=FALSE,
                               blocksize=NULL, replication=NULL,
                               permission=755, buffersize=NULL, ...){
   #Check path is absolute
-  if(!nzchar(targetPath) || substring(targetPath, 1, 1)!="/")
-    stop("Target Path must be non-empty and start with slash '/'")
+  if(!nzchar(targetPath))
+    stop("Target Path must be non-empty")
   #Check source path exists
-  if(!file.exists(srcPath))
+  if(!missing(srcPath) && !file.exists(srcPath))
     stop("Source path doesn't exist")
   
   if(append){
@@ -69,23 +70,27 @@ write_file.webhdfs <- function(fs, targetPath, srcPath, sizeWarn=1e8,
     url <- paste0(url, "&buffersize=",as.integer(buffersize))
   
   h <- basicHeaderGatherer()
-  curlWebHDFS(fs, url, if(append) "POST" else "PUT", followlocation = FALSE, headerfunction = h$update, ...)
+  curl_webhdfs(fs, url, if(append) "POST" else "PUT", followlocation = FALSE, headerfunction = h$update, ...)
   if(h$value()["status"]!="307")
     warning("Unrecognized header content: ", h$value(), "[expect 307]")
   location <- h$value()["Location"]
   h$reset()
   
-  #Check file is valid and not too big
-  info <- file.info(srcPath)
-  if(info$isdir)
-    stop("Source path is a directory not a file!")
-  if(isTRUE(info$size > sizeWarn)){
-    message("File ", basename(srcPath), 
-            " (",info$size," bytes) exceeds threshold size: ", sizeWarn)
-    readline("Press [Enter] to continue...")  
+  if(!missing(srcPath)){
+    #Check file is valid and not too big
+    info <- file.info(srcPath)
+    if(info$isdir)
+      stop("Source path is a directory not a file!")
+    if(isTRUE(info$size > sizeWarn)){
+      message("File ", basename(srcPath), 
+              " (",info$size," bytes) exceeds threshold size: ", sizeWarn)
+      readline("Press [Enter] to continue...")  
+    }
   }
   
-  response <- curlWebHDFS(fs, location, if(append) "POST" else "PUT", putContent=readLines(srcPath), headerfunction = h$update, ...)
+  response <- curl_webhdfs(fs, location, if(append) "POST" else "PUT", 
+                           putContent= if(missing(srcPath)) NULL else readLines(srcPath), 
+                           headerfunction = h$update, ...)
   if(append){
     if(h$value()["status"]!="200" || h$value()["statusMessage"]!="OK"){
       warning("Failed to append file: ", h$value(), "\n", response)

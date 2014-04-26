@@ -11,3 +11,10 @@ Imports:
     RCurl,
     jsonlite
 License: GPL (>= 3)
+Collate:
+    'curl_webhdfs.R'
+    'get_webhdfs_home.R'
+    'concat_file.R'
+    'mkdir.R'
+    'webhdfs.R'
+    'write_file.R'

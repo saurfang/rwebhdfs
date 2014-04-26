@@ -1,9 +1,9 @@
-\name{curlWebHDFS}
-\alias{curlWebHDFS}
+\name{curl_webhdfs}
+\alias{curl_webhdfs}
 \title{Dispatch a WebHDFS Curl request}
 \usage{
-curlWebHDFS(webhdfs, url, requestType = c("GET", "POST", "PUT"),
-  user = NULL, doas = NULL, putContent = NULL, .opts = curlOptions(),
+curl_webhdfs(webhdfs, url, requestType = c("GET", "POST", "PUT"),
+  doas = NULL, putContent = NULL, .opts = curlOptions(),
   headerfunction = NULL, ...)
 }
 \arguments{
@@ -13,9 +13,6 @@ curlWebHDFS(webhdfs, url, requestType = c("GET", "POST", "PUT"),
 
   \item{requestType}{a character vector chosen from "GET",
   "POST", "PUT"}
-
-  \item{user}{the user.name to authenticate through
-  security}
 
   \item{doas}{proxy username that will be impersonated by
   the query user above}
