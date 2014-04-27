@@ -23,37 +23,37 @@
 #' @export
 webhdfs_set <- function(webhdfs, path, permission=NULL, owner=NULL, group=NULL,
                              replication=NULL, modificationtime=NULL, accesstime=NULL, ...){
-  if(!is.null(permission)){
+  if(!missing(permission)){
     url <- paste0(path, "?op=SETPERMISSION")
-    if(grepl("^[01]?[0-7]{3}$", permission))
+    if(!is.null(permission) && grepl("^[01]?[0-7]{3}$", permission))
       url <- paste0(url, "&permission=", permission)
     curl_webhdfs(webhdfs, url, "PUT", ...)
   }
   
-  if(!is.null(owner) || !is.null(group)){
+  if(!missing(owner) || !missing(group)){
     url <- paste0(path, "?op=SETOWNER")
-    if(nzchar(owner))
+    if(!is.null(owner) && nzchar(owner))
       url <- paste0(url, "&owner=", owner)
-    if(nzchar(group))
+    if(!is.null(group) && nzchar(group))
       url <- paste0(url, "&group=", group)
     curl_webhdfs(webhdfs, url, "PUT", ...)
   }
   
-  if(!is.null(replication)){
+  if(!missing(replication)){
     url <- paste0(path, "?op=SETREPLICATION")
     if(is.numeric(replication) && replication > 0)
       url <- paste0(url, "&replication=", replication)
     curl_webhdfs(webhdfs, url, "PUT", ...)
   }
   
-  if(!is.null(modificationtime) || !is.null(accesstime)){
+  if(!missing(modificationtime) || !missing(accesstime)){
     url <- paste0(path, "?op=SETTIMES")
     if(is.numeric(modificationtime))
-      url <- paste0(url, "&modificationtime=", as.integer(modificationtime))
+      url <- paste0(url, "&modificationtime=", round(modificationtime))
     if(is.numeric(accesstime))
-      url <- paste0(url, "&accesstime=", as.integer(accesstime))
+      url <- paste0(url, "&accesstime=", round(accesstime))
     curl_webhdfs(webhdfs, url, "PUT", ...)
   }
   
-  file_stat(path)
+  file_stat(webhdfs, path)
 }
