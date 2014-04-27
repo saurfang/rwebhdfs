@@ -1,0 +1,40 @@
+\name{webhdfs_set}
+\alias{webhdfs_set}
+\title{Set WebHDFS File Properties}
+\usage{
+webhdfs_set(webhdfs, path, permission = NULL, owner = NULL, group = NULL,
+  replication = NULL, modificationtime = NULL, accesstime = NULL, ...)
+}
+\arguments{
+  \item{webhdfs}{a \code{\link{webhdfs}} object}
+
+  \item{path}{The path to file/directory}
+
+  \item{permission}{The permission of a file/directory}
+
+  \item{owner}{The username who is the owner of a
+  file/directory}
+
+  \item{group}{The name of user group}
+
+  \item{replication}{The number of replications of a file}
+
+  \item{modificationtime}{The modification time of a
+  file/directory (in unix milliseconds timestamp)}
+
+  \item{accesstime}{The access time of a file/directory (in
+  unix milliseconds timestamp)}
+
+  \item{...}{additional arguments passed to
+  \code{\link{curl_webhdfs}}}
+}
+\value{
+result from \code{\link{file_stat}} on the updated
+file/directory
+}
+\description{
+Miscellaneous set functions for file properties:
+\enumerate{ \item Permission \item Owner \item Replication
+Factor \item Access or Modication time }
+}
+

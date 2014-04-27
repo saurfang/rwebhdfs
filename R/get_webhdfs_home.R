@@ -5,7 +5,7 @@
 #' 
 #' @param webhdfs a \code{\link{webhdfs}} object
 #' @param doas user whose home folder will be retrieve
-#' @param ... additional arguments passed to \code{\link[RCurl]{getURL}}
+#' @param ... additional arguments passed to \code{\link{curl_webhdfs}}
 #' @include curl_webhdfs.R
 #' @importFrom jsonlite fromJSON
 #' @export

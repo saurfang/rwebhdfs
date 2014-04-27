@@ -33,7 +33,7 @@ write_file.default <- function(fs, targetPath, ...){
 #' @param replication factor for the file
 #' @param permission of the file as in octal mask
 #' @param buffersize used in transferring data
-#' @param ... additional arguments passed to \code{\link[RCurl]{getURL}}
+#' @param ... additional arguments passed to \code{\link{curl_webhdfs}}
 #' @return \code{TRUE} if successful, \code{FALSE} otherwise
 #' @references \href{http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/WebHDFS.html}{WebHDFS}
 #' \href{http://hadoop.apache.org/docs/stable/api/org/apache/hadoop/fs/FileSystem.html}{HDFSFileSystem}
@@ -60,7 +60,7 @@ write_file.webhdfs <- function(fs, targetPath, srcPath, sizeWarn=1e8,
       url <- paste0(url,"&blocksize=",as.integer(blocksize))
     if(is.numeric(replication) && replication > 0)
       url <- paste0(url,"&replication=",as.integer(replication))
-    if(grepl("^[01]?[0-7]{3}$", permission))
+    if(!is.null(permission) && grepl("^[01]?[0-7]{3}$", permission))
       url <- paste0(url,"&permission=",as.integer(permission))
     else
       warning("invalid permission code")

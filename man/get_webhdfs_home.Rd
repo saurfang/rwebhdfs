@@ -10,7 +10,7 @@ get_webhdfs_home(webhdfs, doas = NULL, ...)
   \item{doas}{user whose home folder will be retrieve}
 
   \item{...}{additional arguments passed to
-  \code{\link[RCurl]{getURL}}}
+  \code{\link{curl_webhdfs}}}
 }
 \description{
 Return the current user's home directory in this

@@ -1,14 +1,14 @@
-\name{filestat}
-\alias{filestat}
-\alias{filestat.default}
-\alias{filestat.webhdfs}
-\title{filestat: Status of a File/Directory on a FileSystem}
+\name{file_stat}
+\alias{file_stat}
+\alias{file_stat.default}
+\alias{file_stat.webhdfs}
+\title{file_stat: Status of a File/Directory on a FileSystem}
 \usage{
-filestat(fs, path, ...)
+file_stat(fs, path, ...)
 
-\method{filestat}{default}(fs, path, ...)
+\method{file_stat}{default}(fs, path, ...)
 
-\method{filestat}{webhdfs}(fs, path, ...)
+\method{file_stat}{webhdfs}(fs, path, ...)
 }
 \arguments{
   \item{fs}{FileSystem object}

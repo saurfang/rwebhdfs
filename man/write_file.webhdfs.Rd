@@ -32,7 +32,7 @@
   \item{buffersize}{used in transferring data}
 
   \item{...}{additional arguments passed to
-  \code{\link[RCurl]{getURL}}}
+  \code{\link{curl_webhdfs}}}
 }
 \value{
 \code{TRUE} if successful, \code{FALSE} otherwise

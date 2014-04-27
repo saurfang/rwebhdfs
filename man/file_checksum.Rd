@@ -1,0 +1,27 @@
+\name{file_checksum}
+\alias{file_checksum}
+\alias{file_checksum.default}
+\alias{file_checksum.webhdfs}
+\title{file_checksum: Get File Checksum on a FileSystem}
+\usage{
+file_checksum(fs, path, ...)
+
+\method{file_checksum}{default}(fs, path, ...)
+
+\method{file_checksum}{webhdfs}(fs, path, ...)
+}
+\arguments{
+  \item{fs}{FileSystem object}
+
+  \item{path}{a character vector that contains the path of
+  file}
+
+  \item{...}{other arguments}
+}
+\value{
+a list of Checksum information
+}
+\description{
+Get File Checksum on a FileSystem
+}
+

@@ -18,7 +18,7 @@
   \item{buffersize}{used in transferring data}
 
   \item{...}{additional arguments passed to
-  \code{\link[RCurl]{getURL}}}
+  \code{\link{curl_webhdfs}}}
 }
 \value{
 a character vector that contains the contents of the File

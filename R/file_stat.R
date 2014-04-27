@@ -33,5 +33,5 @@ file_stat.webhdfs <- function(fs, path, ...){
   status <- fromJSON(response)$FileStatus
   status$accessTime <- as.POSIXlt(status$accessTime/1000, origin="1970-01-01")
   status$modificationTime <- as.POSIXlt(status$modificationTime/1000, origin="1970-01-01")
-  status
+  as.data.frame(status, basename(path))
 }

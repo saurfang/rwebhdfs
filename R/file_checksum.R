@@ -24,6 +24,6 @@ file_checksum.default <- function(fs, path, ...){
 #' @importFrom jsonlite fromJSON
 #' @include curl_webhdfs.R
 file_checksum.webhdfs <- function(fs, path, ...){  
-  response <- curl_webhdfs(fs, paste0(path,"?op=GETFILECHECKSUM"), "GET", followlocation = TRUE ...)
+  response <- curl_webhdfs(fs, paste0(path,"?op=GETFILECHECKSUM"), "GET", followlocation = TRUE, ...)
   fromJSON(response)$FileChecksum
 }

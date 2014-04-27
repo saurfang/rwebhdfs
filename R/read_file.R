@@ -28,7 +28,7 @@ read_file.default <- function(fs, path, ...){
 #' @param offset The starting byte position
 #' @param length The number of bytes to be processed
 #' @param buffersize used in transferring data
-#' @param ... additional arguments passed to \code{\link[RCurl]{getURL}}
+#' @param ... additional arguments passed to \code{\link{curl_webhdfs}}
 #' @return a character vector that contains the contents of the File
 #' @references \href{http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/WebHDFS.html}{WebHDFS}
 #' \href{http://hadoop.apache.org/docs/stable/api/org/apache/hadoop/fs/FileSystem.html}{HDFSFileSystem}
