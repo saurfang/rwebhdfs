@@ -89,8 +89,10 @@ write_file.webhdfs <- function(fs, targetPath, srcPath, sizeWarn=1e8,
   }
   
   response <- curl_webhdfs(fs, location, if(append) "POST" else "PUT", 
-                           putContent= if(missing(srcPath)) NULL else readLines(srcPath), 
-                           headerfunction = h$update, ...)
+                           putContent = if(missing(srcPath)) NULL else readLines(srcPath), 
+                           headerfunction = h$update, 
+                           httpheader = c("Content-Type" = "application/octet-stream"),
+                           ...)
   if(append){
     if(h$value()["status"]!="200" || h$value()["statusMessage"]!="OK"){
       warning("Failed to append file: ", h$value(), "\n", response)
