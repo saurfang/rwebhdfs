@@ -13,7 +13,7 @@ dir_stat <- function(fs, path, ...){
 
 #' @rdname dir_stat
 #' @method dir_stat default
-#' @S3method dir_stat default
+#' @export
 dir_stat.default <- function(fs, path, ...){
   warning("Unrecognized filesystem, invoking file.info...")
   file.info(list.files(path), ...)
@@ -21,7 +21,7 @@ dir_stat.default <- function(fs, path, ...){
  
 #' @rdname dir_stat
 #' @method dir_stat webhdfs
-#' @S3method dir_stat webhdfs
+#' @export
 #' @importFrom jsonlite fromJSON
 #' @include curl_webhdfs.R
 dir_stat.webhdfs <- function(fs, path, ...){  

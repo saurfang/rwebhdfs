@@ -13,7 +13,7 @@ read_file <- function(fs, path, ...){
 
 #' @rdname read_file
 #' @method read_file default
-#' @S3method read_file default
+#' @export
 read_file.default <- function(fs, path, ...){
   warning("Unrecognized filesystem, invoking readLines...")
   readLines(path, ...)
@@ -22,7 +22,7 @@ read_file.default <- function(fs, path, ...){
 #' @title Read to a File on HDFS
 #' @rdname read_file.webhdfs
 #' @method read_file webhdfs
-#' @S3method read_file webhdfs
+#' @export
 #' @param fs HDFS FileSystem object
 #' @param path a character vector that contains the path of file to read
 #' @param offset The starting byte position

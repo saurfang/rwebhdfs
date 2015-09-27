@@ -13,14 +13,14 @@ file_checksum <- function(fs, path, ...){
 
 #' @rdname file_checksum
 #' @method file_checksum default
-#' @S3method file_checksum default
+#' @export
 file_checksum.default <- function(fs, path, ...){
   .NotYetImplemented()
 }
  
 #' @rdname file_checksum
 #' @method file_checksum webhdfs
-#' @S3method file_checksum webhdfs
+#' @export
 #' @importFrom jsonlite fromJSON
 #' @include curl_webhdfs.R
 file_checksum.webhdfs <- function(fs, path, ...){  

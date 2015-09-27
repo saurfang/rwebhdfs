@@ -14,7 +14,7 @@ concat_file <- function(fs, targetPath, sourcePath, ...){
 
 #' @rdname concat_file
 #' @method concat_file default
-#' @S3method concat_file default
+#' @export
 concat_file.default <- function(fs, targetPath, sourcePath, ...){
   warning("Unrecognized filesystem, invoking read/writeLines...")
   if(file.exists(targetPath))
@@ -25,9 +25,9 @@ concat_file.default <- function(fs, targetPath, sourcePath, ...){
 
 #' @rdname concat_file
 #' @method concat_file webhdfs
-#' @S3method concat_file webhdfs
 #' @importFrom RCurl basicHeaderGatherer
 #' @include curl_webhdfs.R get_webhdfs_home.R
+#' @export
 concat_file.webhdfs <- function(fs, targetPath, sourcePath, ...){
   #Check path is non empty
   if(!nzchar(targetPath))

@@ -15,7 +15,7 @@ symlink_dir <- function(fs, fromPath, toPath, createParent, ...){
 
 #' @rdname symlink_dir
 #' @method symlink_dir default
-#' @S3method symlink_dir default
+#' @export
 symlink_dir.default <- function(fs, fromPath, toPath, createParent=TRUE, ...){
   warning("Unrecognized filesystem, invoking file.symlink...")
   if(!file.exists(fromPath))
@@ -30,7 +30,7 @@ symlink_dir.default <- function(fs, fromPath, toPath, createParent=TRUE, ...){
 
 #' @rdname symlink_dir
 #' @method symlink_dir webhdfs
-#' @S3method symlink_dir webhdfs
+#' @export
 #' @importFrom RCurl basicHeaderGatherer
 #' @include curl_webhdfs.R
 symlink_dir.webhdfs <- function(fs, fromPath, toPath, createParent=TRUE, ...){  

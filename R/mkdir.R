@@ -13,7 +13,7 @@ mkdir <- function(fs, path, ...){
 
 #' @rdname mkdir
 #' @method mkdir default
-#' @S3method mkdir default
+#' @export
 mkdir.default <- function(fs, path, ...){
   warning("Unrecognized filesystem, invoking dir.create...")
   dir.create(path, ...)
@@ -21,7 +21,7 @@ mkdir.default <- function(fs, path, ...){
  
 #' @rdname mkdir
 #' @method mkdir webhdfs
-#' @S3method mkdir webhdfs
+#' @export
 #' @importFrom jsonlite fromJSON
 #' @include curl_webhdfs.R
 mkdir.webhdfs <- function(fs, path, ...){

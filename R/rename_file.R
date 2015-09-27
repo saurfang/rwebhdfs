@@ -14,7 +14,7 @@ rename_file <- function(fs, fromPath, toPath, ...){
 
 #' @rdname rename_file
 #' @method rename_file default
-#' @S3method rename_file default
+#' @export
 rename_file.default <- function(fs, fromPath, toPath, ...){
   warning("Unrecognized filesystem, invoking file.rename...")
   file.rename(fromPath, toPath)
@@ -22,7 +22,7 @@ rename_file.default <- function(fs, fromPath, toPath, ...){
 
 #' @rdname rename_file
 #' @method rename_file webhdfs
-#' @S3method rename_file webhdfs
+#' @export
 #' @importFrom RCurl basicHeaderGatherer
 #' @importFrom jsonlite fromJSON
 #' @include curl_webhdfs.R

@@ -13,7 +13,7 @@ write_file <- function(fs, targetPath, ...){
 
 #' @rdname write_file
 #' @method write_file default
-#' @S3method write_file default
+#' @export
 write_file.default <- function(fs, targetPath, ...){
   warning("Unrecognized filesystem, invoking write...")
   write(..., file=targetPath)
@@ -22,7 +22,7 @@ write_file.default <- function(fs, targetPath, ...){
 #' @title Create and Write to a File on HDFS
 #' @rdname write_file.webhdfs
 #' @method write_file webhdfs
-#' @S3method write_file webhdfs
+#' @export
 #' @param fs HDFS FileSystem object
 #' @param targetPath a character vector that contains the path of file to write
 #' @param srcPath path of the file whose content will be written
@@ -89,8 +89,10 @@ write_file.webhdfs <- function(fs, targetPath, srcPath, sizeWarn=1e8,
   }
   
   response <- curl_webhdfs(fs, location, if(append) "POST" else "PUT", 
-                           putContent= if(missing(srcPath)) NULL else readLines(srcPath), 
-                           headerfunction = h$update, ...)
+                           putContent = if(missing(srcPath)) NULL else readLines(srcPath), 
+                           headerfunction = h$update, 
+                           httpheader = c("Content-Type" = "application/octet-stream"),
+                           ...)
   if(append){
     if(h$value()["status"]!="200" || h$value()["statusMessage"]!="OK"){
       warning("Failed to append file: ", h$value(), "\n", response)

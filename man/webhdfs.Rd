@@ -30,10 +30,10 @@ To enable WebHDFS in your Hadoop Installation add the following configuration
 to your hdfs_site.xml (requires Hadoop >0.20.205.0):
 
  <property>
-   <name>dfs.webhdfs.enabled</name>
-   <value>true</value>
+ <name>dfs.webhdfs.enabled</name>
+ <value>true</value>
  </property>
 
-see: \url{https://issues.apache.org/jira/secure/attachment/12500090/WebHdfsAPI20111020.pdf}
+ see: \url{https://issues.apache.org/jira/secure/attachment/12500090/WebHdfsAPI20111020.pdf}
 }
 
