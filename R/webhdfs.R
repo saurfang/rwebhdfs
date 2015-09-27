@@ -1,6 +1,6 @@
 #' Initialize WebHDFS Object
 #' 
-#' @section Enable WebHDFS
+#' @section Enable WebHDFS:
 #' To enable WebHDFS in your Hadoop Installation add the following configuration 
 #' to your hdfs_site.xml (requires Hadoop >0.20.205.0):
 #'
