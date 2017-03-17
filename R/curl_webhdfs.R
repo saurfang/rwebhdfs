@@ -23,6 +23,9 @@ curl_webhdfs <- function(webhdfs, url, requestType = c("GET","POST","PUT","DELET
       url <- paste0(get_webhdfs_home(webhdfs, doas), "/", url)
     url <- paste0("http://",webhdfs$host,":",webhdfs$port,"/webhdfs/v1",url)
   }
+  if(webhdfs$host != "localhost" && grepl("^http://localhost:", url)){
+    url <- sub("^http://localhost:", paste0("http://", webhdfs$host, ":"), url)
+  }
   if(webhdfs$security && isTRUE(nzchar(webhdfs$token)))
     url <- paste0(url,"&token=",webhdfs$token)
   if(isTRUE(nzchar(webhdfs$user)))
