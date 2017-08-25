@@ -18,8 +18,10 @@ read_file.default <- function(fs, path, ...){
   warning("Unrecognized filesystem, invoking readLines...")
   readLines(path, ...)
 }
- 
-#' @title Read to a File on HDFS
+
+#' Read a File from HDFS
+#' 
+#' @title Read a File from HDFS
 #' @rdname read_file.webhdfs
 #' @method read_file webhdfs
 #' @export
