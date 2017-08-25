@@ -17,7 +17,7 @@ Ensure that WebHDFS is enabled in the `hdfs-site.xml`
 ```
 
 ## How to Use
-More exmaples will arrive in the function help pages but for now, here's a brief guide on how to use `rwebhdfs`
+More examples will arrive in the function help pages but for now, here's a brief guide on how to use `rwebhdfs`
 
 #### Environment
 I'm recommend HDP 2.0 for quick demo and testing: http://hortonworks.com/hdp/downloads/
