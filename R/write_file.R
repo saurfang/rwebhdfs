@@ -18,7 +18,9 @@ write_file.default <- function(fs, targetPath, ...){
   warning("Unrecognized filesystem, invoking write...")
   write(..., file=targetPath)
 }
- 
+
+#' Create and Write to a File on HDFS
+#' 
 #' @title Create and Write to a File on HDFS
 #' @rdname write_file.webhdfs
 #' @method write_file webhdfs
