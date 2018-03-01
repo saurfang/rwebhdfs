@@ -58,7 +58,7 @@ curl_webhdfs <- function(webhdfs, url, requestType = c("GET","POST","PUT","DELET
     else 
       stop("not certain how to convert content to the target type for a PUT request")
     opts <- curlOptions(infilesize = length(val), readfunction = val, 
-                        upload = TRUE, .opts=opts)
+                        upload = TRUE, followlocation = TRUE, .opts=opts)
   }
   
   response <- getURL(url, .opts=opts)
