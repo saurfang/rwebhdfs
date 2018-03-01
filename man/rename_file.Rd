@@ -10,7 +10,7 @@ rename_file(fs, fromPath, toPath, ...)
 
 \method{rename_file}{default}(fs, fromPath, toPath, ...)
 
-\method{rename_file}{webhdfs}(fs, fromPath, toPath, ...)
+\method{rename_file}{webhdfs}(fs, fromPath, toPath, overwrite = FALSE, ...)
 }
 \arguments{
 \item{fs}{FileSystem object}
@@ -23,6 +23,8 @@ otherwise \code{toPath} is relative to webhdfs home
 derived by \code{\link{get_webhdfs_home}}}
 
 \item{...}{other arguments}
+
+\item{overwrite}{a file if \code{TRUE} and file already exists}
 }
 \value{
 \code{TRUE} if successful, \code{FALSE} otherwise
