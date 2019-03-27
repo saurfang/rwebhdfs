@@ -5,17 +5,18 @@
 #' @param fs FileSystem object
 #' @param path a character vector that contains the path renaming from
 #' @param recursive whether to delete contents of directory recursively
+#' @param trash whether to move path to Trash rather than delete
 #' @param ... other arguments
 #' @rdname delete_file
 #' @export delete_file
-delete_file <- function(fs, path, recursive, ...){
+delete_file <- function(fs, path, recursive, trash,...){
   UseMethod("delete_file")
 }
 
 #' @rdname delete_file
 #' @method delete_file default
 #' @export
-delete_file.default <- function(fs, path, recursive=FALSE, ...){
+delete_file.default <- function(fs, path, recursive=FALSE, trash=FALSE, ...){
   warning("Unrecognized filesystem, invoking file.remove...")
   file.remove(path, recursive)
 }
