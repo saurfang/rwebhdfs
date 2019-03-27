@@ -26,3 +26,4 @@ Collate:
     'webhdfs.R'
     'webhdfs_set.R'
     'write_file.R'
+RoxygenNote: 6.1.1
