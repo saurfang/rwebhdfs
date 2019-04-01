@@ -8,9 +8,11 @@
 \usage{
 symlink_dir(fs, fromPath, toPath, createParent, ...)
 
-\method{symlink_dir}{default}(fs, fromPath, toPath, createParent = TRUE, ...)
+\method{symlink_dir}{default}(fs, fromPath, toPath, createParent = TRUE,
+  ...)
 
-\method{symlink_dir}{webhdfs}(fs, fromPath, toPath, createParent = TRUE, ...)
+\method{symlink_dir}{webhdfs}(fs, fromPath, toPath, createParent = TRUE,
+  ...)
 }
 \arguments{
 \item{fs}{FileSystem object}

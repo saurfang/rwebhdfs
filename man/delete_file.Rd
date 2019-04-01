@@ -6,11 +6,13 @@
 \alias{delete_file.webhdfs}
 \title{delete_file: Rename a File/Directory on a FileSystem}
 \usage{
-delete_file(fs, path, recursive, ...)
+delete_file(fs, path, recursive, trash, ...)
 
-\method{delete_file}{default}(fs, path, recursive = FALSE, ...)
+\method{delete_file}{default}(fs, path, recursive = FALSE,
+  trash = FALSE, ...)
 
-\method{delete_file}{webhdfs}(fs, path, recursive = FALSE, ...)
+\method{delete_file}{webhdfs}(fs, path, recursive = FALSE,
+  trash = FALSE, ...)
 }
 \arguments{
 \item{fs}{FileSystem object}
@@ -18,6 +20,8 @@ delete_file(fs, path, recursive, ...)
 \item{path}{a character vector that contains the path renaming from}
 
 \item{recursive}{whether to delete contents of directory recursively}
+
+\item{trash}{whether to move path to Trash rather than delete}
 
 \item{...}{other arguments}
 }
