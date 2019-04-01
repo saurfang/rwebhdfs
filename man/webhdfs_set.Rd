@@ -4,8 +4,9 @@
 \alias{webhdfs_set}
 \title{Set WebHDFS File Properties}
 \usage{
-webhdfs_set(webhdfs, path, permission = NULL, owner = NULL, group = NULL,
-  replication = NULL, modificationtime = NULL, accesstime = NULL, ...)
+webhdfs_set(webhdfs, path, permission = NULL, owner = NULL,
+  group = NULL, replication = NULL, modificationtime = NULL,
+  accesstime = NULL, ...)
 }
 \arguments{
 \item{webhdfs}{a \code{\link{webhdfs}} object}

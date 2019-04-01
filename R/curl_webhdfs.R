@@ -34,7 +34,6 @@ curl_webhdfs <- function(webhdfs, url, requestType = c("GET","POST","PUT","DELET
     url <- paste0(url,"&doas=",doas)
   
   opts <- if(inherits(.opts, "curlOptions")) .opts else curlOptions()
-  opts <- curlOptions(..., .opts=opts)
   #Enable Kerberos SPNEGO
   if(webhdfs$security && is.null(webhdfs$token))
       opts[["username"]] <- ":"
@@ -61,7 +60,7 @@ curl_webhdfs <- function(webhdfs, url, requestType = c("GET","POST","PUT","DELET
                         upload = TRUE, followlocation = TRUE, .opts=opts)
   }
   
-  response <- getURL(url, .opts=opts)
+  response <- getURL(url, .opts=opts, ...)
   
   if(as.integer(h$value()["status"]) >= 400)
     stop("Request failed: ", h$value()["statusMessage"],

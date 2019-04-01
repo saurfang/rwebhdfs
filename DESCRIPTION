@@ -14,4 +14,19 @@ Imports:
     RCurl,
     jsonlite
 License: GPL (>= 3)
-
+RoxygenNote: 6.1.0
+Collate: 
+    'curl_webhdfs.R'
+    'get_webhdfs_home.R'
+    'concat_file.R'
+    'delete_file.R'
+    'dir_stat.R'
+    'file_checksum.R'
+    'file_stat.R'
+    'mkdir.R'
+    'read_file.R'
+    'rename_file.R'
+    'symlink_dir.R'
+    'webhdfs.R'
+    'webhdfs_set.R'
+    'write_file.R'

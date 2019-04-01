@@ -10,7 +10,8 @@ rename_file(fs, fromPath, toPath, ...)
 
 \method{rename_file}{default}(fs, fromPath, toPath, ...)
 
-\method{rename_file}{webhdfs}(fs, fromPath, toPath, overwrite = FALSE, ...)
+\method{rename_file}{webhdfs}(fs, fromPath, toPath, overwrite = FALSE,
+  ...)
 }
 \arguments{
 \item{fs}{FileSystem object}
