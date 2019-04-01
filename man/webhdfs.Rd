@@ -36,3 +36,4 @@ to your hdfs_site.xml (requires Hadoop >0.20.205.0):
  
  see: \url{https://issues.apache.org/jira/secure/attachment/12500090/WebHdfsAPI20111020.pdf}
 }
+
