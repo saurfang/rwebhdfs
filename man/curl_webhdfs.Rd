@@ -4,8 +4,8 @@
 \alias{curl_webhdfs}
 \title{Dispatch a WebHDFS Curl request}
 \usage{
-curl_webhdfs(webhdfs, url, requestType = c("GET", "POST", "PUT", "DELETE"),
-  doas = NULL, putContent = NULL, .opts = curlOptions(),
+curl_webhdfs(webhdfs, url, requestType = c("GET", "POST", "PUT",
+  "DELETE"), doas = NULL, putContent = NULL, .opts = curlOptions(),
   headerfunction = NULL, ...)
 }
 \arguments{
