@@ -1,8 +1,11 @@
 Package: rwebhdfs
 Title: WebHDFS REST API for R
-Version: 0.1-1
-Authors@R: c(person("Forest", "Fang", email="forest.fang@outlook.com",
-    role=c("aut","cre")))
+Version: 0.1-2
+Authors@R: c(person("Forest", "Fang", email = "forest.fang@outlook.com",
+    role = c("aut","cre")), person("Ian", "Cook", email = "ian@cloudera.com",
+    role = "ctb"), person("Gerhard", "Nachtmann",
+    email = "kpm.nachtmann@gmail.com", role = "ctb"),
+    person("Antonio", "Bibiano", role = "ctb"))
 Description: WebHDFS supports all HDFS user operations including reading files,
     writing to files, making directories, changing permissions and renaming.
 Depends:
@@ -11,7 +14,8 @@ Imports:
     RCurl,
     jsonlite
 License: GPL (>= 3)
-Collate:
+RoxygenNote: 6.1.0
+Collate: 
     'curl_webhdfs.R'
     'get_webhdfs_home.R'
     'concat_file.R'
@@ -26,4 +30,3 @@ Collate:
     'webhdfs.R'
     'webhdfs_set.R'
     'write_file.R'
-RoxygenNote: 6.1.1

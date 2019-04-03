@@ -10,20 +10,41 @@ rename_file(fs, fromPath, toPath, ...)
 
 \method{rename_file}{default}(fs, fromPath, toPath, ...)
 
-\method{rename_file}{webhdfs}(fs, fromPath, toPath, ...)
+\method{rename_file}{webhdfs}(fs, fromPath, toPath, overwrite = FALSE,
+  ...)
 }
 \arguments{
 \item{fs}{FileSystem object}
 
 \item{fromPath}{a character vector that contains the path renaming from}
 
-\item{toPath}{a character vector that contains the path renaming to}
+\item{toPath}{a character vector that contains the path renaming to.
+If it starts with \code{/} the absolute path is taken,
+otherwise \code{toPath} is relative to webhdfs home
+derived by \code{\link{get_webhdfs_home}}}
 
 \item{...}{other arguments}
+
+\item{overwrite}{a file if \code{TRUE} and file already exists}
 }
 \value{
 \code{TRUE} if successful, \code{FALSE} otherwise
 }
 \description{
 Rename a File/Directory on a FileSystem
+}
+\examples{
+\dontrun{
+## move file /user/<username>/foo (in hdfs) to
+## /user/<username>/bar/foo
+rename_file(hdfs, "foo", "bar/foo")
+
+## move file /user/<username>/foo (in hdfs) to
+## /mypath/foo
+rename_file(hdfs, "foo", "/mypath/foo")
+}
+
+}
+\seealso{
+\code{\link{get_webhdfs_home}}
 }

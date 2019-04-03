@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_file.R
 \name{read_file.webhdfs}
 \alias{read_file.webhdfs}
-\title{Read to a File on HDFS}
+\title{Read a File from HDFS}
 \usage{
 \method{read_file}{webhdfs}(fs, path, offset = NULL, length = NULL,
   buffersize = NULL, ...)
@@ -24,7 +24,7 @@
 a character vector that contains the contents of the File
 }
 \description{
-Read to a File on HDFS
+Read a File from HDFS
 }
 \references{
 \href{http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/WebHDFS.html}{WebHDFS}
